@@ -1,12 +1,20 @@
 import React, { Component } from 'react'
-import { Text, View } from 'react-native'
+import { ImageBackground,StyleSheet  } from 'react-native'
 
-export default class componentName extends Component {
+export default class SplashScreen extends Component {
   render() {
+    // Go to home page after 2 seconds
+    setTimeout(()=>{this.props.navigation.navigate('MainAppNavigation')},2000)
+
+    // Render an image background for splash screen
     return (
-      <View>
-        <Text> Splash Screen </Text>
-      </View>
+      <ImageBackground style={SplashScreenStyle.container} source={require('../assets/images/splash.png')}/>
     )
   }
 }
+const SplashScreenStyle = StyleSheet.create({
+  container: {
+    height: '100%',
+    width: '100%'
+  }
+})
