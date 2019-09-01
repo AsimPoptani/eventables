@@ -1,0 +1,4 @@
+#Sun Sep 01 19:50:53 BST 2019
+base.0=/home/asim/Work/eventablesv1/eventables/android/app/build/intermediates/transforms/dexMerger/release/0
+path.0=classes.dex
+renamed.0=classes.dex
