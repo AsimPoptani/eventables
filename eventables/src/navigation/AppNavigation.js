@@ -16,10 +16,18 @@ import KeepAwake from 'react-native-keep-awake';
 KeepAwake.activate();
 
 // Main application stack
-const MainAppNavigation = createStackNavigator({
-  Home: {screen: Home},
-  ExpandedView: {screen: ExpandedView},
-});
+const MainAppNavigation = createStackNavigator(
+  {
+    Home: {screen: Home},
+    ExpandedView: {screen: ExpandedView},
+  },
+  {
+    // Add display name
+    defaultNavigationOptions: {
+      title: 'Eventables',
+    },
+  },
+);
 // Switch navigator to switch from Splashscreen to stack
 const SplashScreenToMainAppNavigation = createAnimatedSwitchNavigator(
   {

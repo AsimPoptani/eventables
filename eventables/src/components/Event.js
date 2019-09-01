@@ -36,9 +36,13 @@ class Event extends Component {
         title={title}
         image={{uri: image}}
         featuredTitle={momentDateTime.calendar()}
-        imageStyle={{overlayColor: 'rgba(0,0,0,1)'}}
         imageProps={{resizeMode: 'contain'}}>
-        <Button title="Find out more >" onPress={() => {}} />
+        <Button
+          title="Find out more >"
+          onPress={() => {
+            navigation.navigate('ExpandedView', this.state);
+          }}
+        />
       </Card>
     );
   }
