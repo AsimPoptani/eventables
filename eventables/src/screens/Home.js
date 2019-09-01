@@ -26,7 +26,7 @@ export default class Home extends Component {
   render() {
     const {events, error} = this.state;
     // If there are no events loaded show loading
-    if (!events) {
+    if (!events && !error) {
       return (
         <SafeAreaView style={HomeStyleSheet.centerContent}>
           {/* Spin in the middle of the screen and have the spinner fill 60%
@@ -40,12 +40,21 @@ export default class Home extends Component {
         </SafeAreaView>
       );
     } else if (error) {
+      // Try pulling again
+      fetchEventData()
+        .then(events => this.setState({events: events, error: false}))
+        .catch({error: true});
+      // Error message
       return (
-        <SafeAreaView>
-          <Text>There has been an error</Text>
+        <SafeAreaView style={HomeStyleSheet.container}>
+          <Text>
+            There has been an error! Please make sure you have a good internet
+            connection!
+          </Text>
         </SafeAreaView>
       );
     } else {
+      // Sort events via date
       const eventsSorted = events.sort((event1, event2) => {
         if (
           moment(event1.start.utc).toDate() -
@@ -59,7 +68,7 @@ export default class Home extends Component {
       });
 
       return (
-        <SafeAreaView>
+        <SafeAreaView style={HomeStyleSheet.container}>
           {/* Added flatlist to handle the events */}
           <FlatList
             data={eventsSorted}
@@ -85,5 +94,8 @@ const HomeStyleSheet = StyleSheet.create({
     textAlign: 'center',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  container: {
+    padding: 10,
   },
 });

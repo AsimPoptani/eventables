@@ -2,9 +2,10 @@ import React, {Component} from 'react';
 import {Linking, View, StyleSheet} from 'react-native';
 import {Button, Text} from 'react-native-elements';
 import {WebView} from 'react-native-webview';
-
+import ApplicationStylesheet from '../stylesheet/ApplicationStylesheet';
 export default class componentName extends Component {
   render() {
+    // Get props from navigation
     const description = this.props.navigation.getParam(
       'description',
       'Something has gone awry',
@@ -14,8 +15,12 @@ export default class componentName extends Component {
     const dateTime = this.props.navigation.getParam('dateTime', false);
     return (
       <View style={ExpandedViewStyleSheet.container}>
-        {title && <Text>{title}</Text>}
-        {title && <Text>{dateTime}</Text>}
+        {/* Show title dateTime if it exists */}
+        {title && <Text style={ExpandedViewStyleSheet.title}>{title}</Text>}
+        {dateTime && (
+          <Text style={ExpandedViewStyleSheet.dateTime}>{dateTime}</Text>
+        )}
+        {/* WebView note - viewport hack to enable html to be adaptive */}
         <WebView
           originWhitelist={['*']}
           style={ExpandedViewStyleSheet.webview}
@@ -44,7 +49,13 @@ export default class componentName extends Component {
 const ExpandedViewStyleSheet = StyleSheet.create({
   webview: {
     flex: 1,
-    fontSize: 100,
+  },
+  title: {
+    fontSize: ApplicationStylesheet.TextStylesheet.TitleSmaller,
+    textAlign: 'center',
+  },
+  dateTime: {
+    fontSize: ApplicationStylesheet.TextStylesheet.MediumLarge,
   },
   container: {
     flex: 1,

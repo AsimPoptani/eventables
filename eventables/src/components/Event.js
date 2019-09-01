@@ -3,6 +3,7 @@ import {TouchableOpacity} from 'react-native';
 import {withNavigation} from 'react-navigation';
 import {Card, Button} from 'react-native-elements';
 import Moment from 'moment';
+import PropTypes from 'prop-types';
 class Event extends Component {
   constructor(props) {
     super(props);
@@ -17,21 +18,16 @@ class Event extends Component {
     };
   }
   render() {
-    /*
-    Todo:
-     Add prototypes
-     Pass to navigation
-      Setup pass description
-     Setup key
-     Setup dateview
-
-    */
+    // Deconstruct state
     const {title, description, dateTime, image, url} = this.state;
+    // Get nav
     const {navigation} = this.props;
+    // parse date and convert to users localtime
     const momentDateTime = Moment(dateTime)
       .utc()
       .local();
     return (
+      // Make whole section clickable
       <TouchableOpacity
         onPress={() => {
           navigation.navigate('ExpandedView', {
@@ -62,4 +58,16 @@ class Event extends Component {
     );
   }
 }
+// Proptypes to check incoming data
+Event.propTypes = {
+  title: PropTypes.string.isRequired,
+  dateTime: PropTypes.string.isRequired,
+  image: PropTypes.string,
+  description: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
+};
+Event.defaultProps = {
+  image:
+    'https://developersushant.files.wordpress.com/2015/02/no-image-available.png',
+};
 export default withNavigation(Event);

@@ -3,7 +3,7 @@ const {width} = Dimensions.get('window');
 // If screen width is larger than 375 scale by increasing font size by 5%
 const m = width > 375 ? 1.05 : 1;
 // Font sizes
-export const FontSizes = {
+export default {
   Title: Platform.OS === 'ios' ? 43 * m : 40 * m,
   TitleMedium: Platform.OS === 'ios' ? 36 * m : 34 * m,
   TitleSmall: Platform.OS === 'ios' ? 32 * m : 30 * m,
