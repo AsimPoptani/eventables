@@ -8,7 +8,7 @@ export const fetchEventData = () => {
     fetchival(eventbriteApi)
       .get()
       .then(json => {
-        resolve(json.events[0]);
+        resolve(json.events);
       })
       .catch(err => {
         reject(err);

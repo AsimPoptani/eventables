@@ -1,7 +1,15 @@
 import React, {Component} from 'react';
-import {Text, View, SafeAreaView, Dimensions, StyleSheet} from 'react-native';
+import {
+  Text,
+  View,
+  FlatList,
+  SafeAreaView,
+  Dimensions,
+  StyleSheet,
+} from 'react-native';
 import {fetchEventData} from '../api/api';
 import Spinner from 'react-native-spinkit';
+import Event from '../components/Event';
 import ApplicationStylesheet from '../stylesheet/ApplicationStylesheet';
 export default class Home extends Component {
   constructor(props) {
@@ -10,7 +18,6 @@ export default class Home extends Component {
       events: false,
       error: false,
     };
-    const {events, error} = this.state;
     // Get the events
     fetchEventData()
       .then(events => this.setState({events: events}))
@@ -39,18 +46,30 @@ export default class Home extends Component {
         </SafeAreaView>
       );
     } else {
-      console.warn(events);
       return (
-        <View>
-          <Text> Home Page </Text>
-        </View>
+        <SafeAreaView>
+          {/* Added flatlist to handle the events */}
+          <FlatList
+            data={events}
+            renderItem={({item}) => (
+              <Event
+                title={item.name.text}
+                dateTime={item.start.utc}
+                description={item.description.text}
+                key={item.id}
+                image={item.logo.original.url}
+                url={item.url}
+              />
+            )}
+          />
+        </SafeAreaView>
       );
     }
   }
 }
 const HomeStyleSheet = StyleSheet.create({
   centerContent: {
-    flex:1,
+    flex: 1,
     textAlign: 'center',
     alignItems: 'center',
     justifyContent: 'center',
