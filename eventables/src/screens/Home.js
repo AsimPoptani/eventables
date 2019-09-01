@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {
   Text,
-  View,
   FlatList,
   SafeAreaView,
   Dimensions,
@@ -68,7 +67,7 @@ export default class Home extends Component {
               <Event
                 title={event.name.text}
                 dateTime={event.start.utc}
-                description={event.description.text}
+                description={event.description.html}
                 key={event.id}
                 image={event.logo.original.url}
                 url={event.url}

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import {Text, View} from 'react-native';
+import {TouchableOpacity} from 'react-native';
 import {withNavigation} from 'react-navigation';
-import {Card, ListItem, Button, Icon} from 'react-native-elements';
+import {Card, Button} from 'react-native-elements';
 import Moment from 'moment';
 class Event extends Component {
   constructor(props) {
@@ -26,24 +26,39 @@ class Event extends Component {
      Setup dateview
 
     */
-    const {title, description, dateTime, image, url, key} = this.state;
+    const {title, description, dateTime, image, url} = this.state;
     const {navigation} = this.props;
     const momentDateTime = Moment(dateTime)
       .utc()
       .local();
     return (
-      <Card
-        title={title}
-        image={{uri: image}}
-        featuredTitle={momentDateTime.calendar()}
-        imageProps={{resizeMode: 'contain'}}>
-        <Button
-          title="Find out more >"
-          onPress={() => {
-            navigation.navigate('ExpandedView', this.state);
-          }}
-        />
-      </Card>
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate('ExpandedView', {
+            title: title,
+            description: description,
+            dateTime: momentDateTime.calendar(),
+            url: url,
+          });
+        }}>
+        <Card
+          title={title}
+          image={{uri: image}}
+          featuredTitle={momentDateTime.calendar()}
+          imageProps={{resizeMode: 'contain'}}>
+          <Button
+            title="Find out more >"
+            onPress={() => {
+              navigation.navigate('ExpandedView', {
+                title: title,
+                description: description,
+                dateTime: momentDateTime.calendar(),
+                url: url,
+              });
+            }}
+          />
+        </Card>
+      </TouchableOpacity>
     );
   }
 }
