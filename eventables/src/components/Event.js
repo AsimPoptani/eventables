@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Text, View} from 'react-native';
 import {withNavigation} from 'react-navigation';
 import {Card, ListItem, Button, Icon} from 'react-native-elements';
+import Moment from 'moment';
 class Event extends Component {
   constructor(props) {
     super(props);
@@ -18,22 +19,26 @@ class Event extends Component {
   render() {
     /*
     Todo:
-     Add proptypes
+     Add prototypes
      Pass to navigation
       Setup pass description
      Setup key
      Setup dateview
-     
+
     */
     const {title, description, dateTime, image, url, key} = this.state;
-
+    const {navigation} = this.props;
+    const momentDateTime = Moment(dateTime)
+      .utc()
+      .local();
     return (
       <Card
         title={title}
         image={{uri: image}}
+        featuredTitle={momentDateTime.calendar()}
+        imageStyle={{overlayColor: 'rgba(0,0,0,1)'}}
         imageProps={{resizeMode: 'contain'}}>
-        {/* <Text> {description} </Text> */}
-        <Button title="View Now" onPress={() => {}} />
+        <Button title="Find out more >" onPress={() => {}} />
       </Card>
     );
   }

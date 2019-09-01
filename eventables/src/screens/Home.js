@@ -11,6 +11,7 @@ import {fetchEventData} from '../api/api';
 import Spinner from 'react-native-spinkit';
 import Event from '../components/Event';
 import ApplicationStylesheet from '../stylesheet/ApplicationStylesheet';
+import moment from 'moment';
 export default class Home extends Component {
   constructor(props) {
     super(props);
@@ -46,19 +47,31 @@ export default class Home extends Component {
         </SafeAreaView>
       );
     } else {
+      const eventsSorted = events.sort((event1, event2) => {
+        if (
+          moment(event1.start.utc).toDate() -
+            moment(event2.start.utc).toDate() >=
+          0
+        ) {
+          return true;
+        } else {
+          return false;
+        }
+      });
+
       return (
         <SafeAreaView>
           {/* Added flatlist to handle the events */}
           <FlatList
-            data={events}
-            renderItem={({item}) => (
+            data={eventsSorted}
+            renderItem={({item: event}) => (
               <Event
-                title={item.name.text}
-                dateTime={item.start.utc}
-                description={item.description.text}
-                key={item.id}
-                image={item.logo.original.url}
-                url={item.url}
+                title={event.name.text}
+                dateTime={event.start.utc}
+                description={event.description.text}
+                key={event.id}
+                image={event.logo.original.url}
+                url={event.url}
               />
             )}
           />
